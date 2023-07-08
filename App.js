@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import IntroScreen from "./src/screens/IntroScreens/IntroScreens";
+import MyRoutes from "./MyRoutes";
+import { View } from "react-native";
+import { useFonts } from "expo-font";
+import { useCallback } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+function App() {
+  const [fontsLoaded] = useFonts({
+    Montserrat_Bold: require("./assets/fonts/Montserrat-Bold.ttf"),
+    Montserrat_Medium: require("./assets/fonts/Montserrat-Medium.ttf"),
+    Montserrat_Regular: require("./assets/fonts/Montserrat-Regular.ttf"),
+    Montserrat_Light: require("./assets/fonts/Montserrat-Light.ttf"),
+    Montserrat_MediumBold: require("./assets/fonts/Montserrat-Bold-500.ttf"),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <MyRoutes />
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
