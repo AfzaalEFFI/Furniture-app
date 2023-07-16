@@ -5,56 +5,88 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from "react-native";
-import React from "react";
-import logo from "../../../assets/todo.png";
-import { Dimensions } from "react-native";
+import React, { useState } from "react";
 import TextInputCN from "../../components/TextInput";
 import KeybordWrapper from "../../components/KeybordWrapper";
-import { KeyboardAvoidingView } from "react-native";
 import { Entypo, AntDesign } from "react-native-vector-icons";
+import logo from "../../../assets/logo.png";
+import { useNavigation } from "@react-navigation/native";
 
 const Height = Dimensions.get("screen").height;
 const Width = Dimensions.get("screen").width;
 
 const LoginScreen = () => {
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const navigation = useNavigation();
+
+  // Function to handle login button press
+  const handleLogin = () => {
+    // Your login logic here
+    navigation.navigate("homeScreen");
+  };
+
   return (
     <KeybordWrapper>
       <View style={styles.main}>
+        {/* Logo */}
+        <View style={{ alignSelf: "center", top: Height * 0.06 }}>
+          <Image source={logo} style={styles.image} />
+        </View>
+
+        {/* Header */}
         <View style={styles.headerContainer}>
-          <Text style={styles.title}>Wellcome </Text>
-          <Text style={styles.decripation}>
-            please login or singup to continue our app
+          <Text style={styles.title}>Welcome</Text>
+          <Text style={styles.description}>
+            Please login or sign up to continue using our app
           </Text>
         </View>
 
+        {/* Input fields */}
         <View style={styles.inputContainer}>
-          <TextInputCN label="Email" placeholder="Enter Your Email" />
-          <TextInputCN label="Password" placeholder="Enter Your Password" />
+          <TextInputCN
+            label="Email"
+            placeholder="Enter Your Email"
+            setEmail={setEmail}
+          />
+          <TextInputCN
+            label="Password"
+            placeholder="Enter Your Password"
+            setPassword={setPassword}
+          />
         </View>
 
+        {/* Action buttons */}
         <View style={styles.actionContainer}>
+          {/* Login button */}
           <TouchableOpacity
             style={{
               ...styles.btnContainer,
               backgroundColor: "black",
               flexDirection: "column",
             }}
+            onPress={handleLogin}
           >
             <Text style={styles.primaryBtn}>Login</Text>
           </TouchableOpacity>
 
+          {/* OR divider */}
           <View style={styles.orContainer}>
             <View style={styles.lineContainer}></View>
             <Text>or</Text>
             <View style={styles.lineContainer}></View>
           </View>
 
+          {/* Continue with Facebook button */}
           <TouchableOpacity style={styles.btnContainer}>
             <Entypo name="facebook" style={styles.icon} color="white" />
-            <Text style={styles.primaryBtn}>continue with Facebook</Text>
+            <Text style={styles.primaryBtn}>Continue with Facebook</Text>
           </TouchableOpacity>
 
+          {/* Continue with Google button */}
           <TouchableOpacity
             style={{
               ...styles.btnContainer,
@@ -70,9 +102,11 @@ const LoginScreen = () => {
                 color: "black",
               }}
             >
-              continue with Google
+              Continue with Google
             </Text>
           </TouchableOpacity>
+
+          {/* Continue with Apple button */}
           <TouchableOpacity
             style={{
               ...styles.btnContainer,
@@ -88,22 +122,25 @@ const LoginScreen = () => {
                 color: "#000",
               }}
             >
-              continue with Apple
+              Continue with Apple
             </Text>
           </TouchableOpacity>
         </View>
 
-        <View style={styles.singUpContainer}>
-          <Text style={styles.decripation}>Don't have an Account? </Text>
-          <Text
-            style={{
-              ...styles.decripation,
-              color: "indigo",
-              fontSize: Height * 0.02,
-            }}
-          >
-            singup
-          </Text>
+        {/* Sign-up link */}
+        <View style={styles.signUpContainer}>
+          <Text style={styles.description}>Don't have an Account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+            <Text
+              style={{
+                ...styles.description,
+                color: "indigo",
+                fontSize: Height * 0.02,
+              }}
+            >
+              Sign Up
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </KeybordWrapper>
@@ -113,22 +150,23 @@ const LoginScreen = () => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+  // Styles for each section go here
   main: {
     flex: 1,
-    // height: "100%",
+    backgroundColor: "#fff",
   },
   headerContainer: {
-    flex: 1,
-    alignItems: "center",
     justifyContent: "center",
-    marginVertical: Height * 0.13,
+    marginVertical: Height * 0.06,
+    paddingHorizontal: Width * 0.06,
+    top: 30,
   },
   title: {
     fontFamily: "Montserrat_Bold",
     fontSize: Height * 0.03,
     fontWeight: "600",
   },
-  decripation: {
+  description: {
     fontFamily: "Montserrat_Regular",
     fontSize: Height * 0.018,
   },
@@ -149,8 +187,6 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     backgroundColor: "#3B5999",
-
-    // alignSelf: "center",
     color: "white",
     borderRadius: Height * 0.1,
     fontFamily: "Montserrat_Bold",
@@ -180,11 +216,15 @@ const styles = StyleSheet.create({
     top: Height * 0.015,
     fontSize: Height * 0.025,
   },
-  singUpContainer: {
+  signUpContainer: {
     width: Width * 0.6,
     flexDirection: "row",
     alignSelf: "center",
     alignItems: "center",
-    marginTop: Height * 0.015,
+    paddingVertical: 25,
+  },
+  image: {
+    width: 300,
+    height: 150,
   },
 });

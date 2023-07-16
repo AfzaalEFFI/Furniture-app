@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import React from "react";
 import { Dimensions } from "react-native";
-import KeybordWrapper from "./KeybordWrapper";
-import { KeyboardAvoidingView } from "react-native";
 
 const Height = Dimensions.get("screen").height;
 const Width = Dimensions.get("screen").width;

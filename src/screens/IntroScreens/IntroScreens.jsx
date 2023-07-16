@@ -4,6 +4,7 @@ import Swiper, { Pagination } from "react-native-swiper";
 import { Image } from "react-native";
 import { Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const Height = Dimensions.get("screen").height;
 const Width = Dimensions.get("screen").width;
@@ -30,6 +31,7 @@ const onboardingData = [
 ];
 
 const IntroScreens = () => {
+  const navigation = useNavigation();
   return (
     <Swiper
       style={styles.wrapper}
@@ -49,7 +51,10 @@ const IntroScreens = () => {
             <Text style={styles.heading}>{slide.heading}</Text>
             <Text style={styles.description}>{slide.description}</Text>
           </View>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("login")}
+          >
             <Text style={styles.btn}>Skip</Text>
           </TouchableOpacity>
         </View>

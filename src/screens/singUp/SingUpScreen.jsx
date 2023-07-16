@@ -1,25 +1,41 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Dimensions } from "react-native";
 import TextInputCN from "../../components/TextInput";
 import KeybordWrapper from "../../components/KeybordWrapper";
 import { Entypo, AntDesign } from "react-native-vector-icons";
+import logo from "../../../assets/logo.png";
+import { useNavigation } from "@react-navigation/native";
 
 const Height = Dimensions.get("screen").height;
 const Width = Dimensions.get("screen").width;
 
 const SingUpScreen = () => {
+  const navigation = useNavigation();
+
+  // Function to handle sign-up button press
+  const handleSignUp = () => {
+    // Your sign-up logic here
+    navigation.navigate("login");
+  };
+
   return (
     <KeybordWrapper>
       <View style={styles.main}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.title}>Sing Up </Text>
-          <Text style={styles.decripation}>create an new account</Text>
+        {/* Logo */}
+        <View style={{ alignSelf: "center", top: Height * 0.06 }}>
+          <Image source={logo} style={styles.image} />
         </View>
 
+        {/* Header */}
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>Sign Up</Text>
+          <Text style={styles.description}>Create a new account</Text>
+        </View>
+
+        {/* Input fields */}
         <View style={styles.inputContainer}>
           <TextInputCN label="User Name" placeholder="Enter Your Name" />
-
           <TextInputCN label="Email" placeholder="Enter Your Email" />
           <TextInputCN label="Password" placeholder="Enter Your Password" />
           <TextInputCN
@@ -28,27 +44,34 @@ const SingUpScreen = () => {
           />
         </View>
 
+        {/* Action buttons */}
         <View style={styles.actionContainer}>
+          {/* Sign-up button */}
           <TouchableOpacity
             style={{
               ...styles.btnContainer,
               backgroundColor: "black",
               flexDirection: "column",
             }}
+            onPress={handleSignUp}
           >
-            <Text style={styles.primaryBtn}>Sing Up</Text>
+            <Text style={styles.primaryBtn}>Sign Up</Text>
           </TouchableOpacity>
+
+          {/* OR divider */}
           <View style={styles.orContainer}>
             <View style={styles.lineContainer}></View>
             <Text>or</Text>
             <View style={styles.lineContainer}></View>
           </View>
 
+          {/* Continue with Facebook button */}
           <TouchableOpacity style={styles.btnContainer}>
             <Entypo name="facebook" style={styles.icon} color="white" />
-            <Text style={styles.primaryBtn}>continue with Facebook</Text>
+            <Text style={styles.primaryBtn}>Continue with Facebook</Text>
           </TouchableOpacity>
 
+          {/* Continue with Google button */}
           <TouchableOpacity
             style={{
               ...styles.btnContainer,
@@ -64,9 +87,11 @@ const SingUpScreen = () => {
                 color: "black",
               }}
             >
-              continue with Google
+              Continue with Google
             </Text>
           </TouchableOpacity>
+
+          {/* Continue with Apple button */}
           <TouchableOpacity
             style={{
               ...styles.btnContainer,
@@ -82,22 +107,25 @@ const SingUpScreen = () => {
                 color: "#000",
               }}
             >
-              continue with Apple
+              Continue with Apple
             </Text>
           </TouchableOpacity>
         </View>
 
-        <View style={styles.singUpContainer}>
-          <Text style={styles.decripation}>Already have an Account? </Text>
-          <Text
-            style={{
-              ...styles.decripation,
-              color: "indigo",
-              fontSize: Height * 0.02,
-            }}
-          >
-            login
-          </Text>
+        {/* Login link */}
+        <View style={styles.signUpContainer}>
+          <Text style={styles.description}>Already have an Account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("login")}>
+            <Text
+              style={{
+                ...styles.description,
+                color: "indigo",
+                fontSize: Height * 0.02,
+              }}
+            >
+              Login
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </KeybordWrapper>
@@ -107,22 +135,24 @@ const SingUpScreen = () => {
 export default SingUpScreen;
 
 const styles = StyleSheet.create({
+  // Styles for each section go here
   main: {
-    flex: 1,
-    // height: "100%",
+    backgroundColor: "#fff",
   },
   headerContainer: {
-    flex: 1,
-    alignItems: "center",
+    // flex: 1,
+    // alignItems: "center",
     justifyContent: "center",
-    marginVertical: Height * 0.08,
+    marginVertical: Height * 0.04,
+    top: 20,
+    left: 20,
   },
   title: {
     fontFamily: "Montserrat_Bold",
     fontSize: Height * 0.03,
     fontWeight: "600",
   },
-  decripation: {
+  description: {
     fontFamily: "Montserrat_Regular",
     fontSize: Height * 0.018,
   },
@@ -143,8 +173,6 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     backgroundColor: "#3B5999",
-
-    // alignSelf: "center",
     color: "white",
     borderRadius: Height * 0.1,
     fontFamily: "Montserrat_Bold",
@@ -161,7 +189,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     opacity: 0.5,
-    // marginBottom: 10,
   },
   lineContainer: {
     width: "45%",
@@ -174,10 +201,15 @@ const styles = StyleSheet.create({
     top: Height * 0.015,
     fontSize: Height * 0.025,
   },
-  singUpContainer: {
+  signUpContainer: {
     width: Width * 0.6,
     flexDirection: "row",
     alignSelf: "center",
     alignItems: "center",
+    paddingVertical: 20,
+  },
+  image: {
+    width: 300,
+    height: 100,
   },
 });

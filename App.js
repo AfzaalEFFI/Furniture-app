@@ -16,6 +16,7 @@ function App() {
     Montserrat_Regular: require("./assets/fonts/Montserrat-Regular.ttf"),
     Montserrat_Light: require("./assets/fonts/Montserrat-Light.ttf"),
     Montserrat_MediumBold: require("./assets/fonts/Montserrat-Bold-500.ttf"),
+    Montserrat_ExtraBold: require("./assets/fonts/Montserrat-ExtraBold.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {
